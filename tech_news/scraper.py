@@ -1,6 +1,7 @@
 import requests
 from time import sleep
 from bs4 import BeautifulSoup
+import re
 
 
 # Requisito 1
@@ -66,9 +67,72 @@ def scrape_next_page_link(html_content):
         return anchor.get("href")
 
 
+def get_url_from_soup(soup):
+    "Recupera URL da postagem"
+    return soup.find("link", {"rel": "canonical"}).get("href")
+
+
+def get_title_from_soup(soup):
+    "Recupera título da postagem e remove espaços vazios no fim"
+    return (soup.find("h1", {"class": "entry-title"}).text).rstrip()
+
+
+def get_timestamp_from_soup(soup):
+    "Recupera data da postagem"
+    return soup.find("li", {"class": "meta-date"}).text
+
+
+def get_writer_from_soup(soup):
+    "Recupera autor da postagem"
+    author_container = soup.find("span", {"class": "author"})
+    return author_container.find("a").text
+
+
+def get_reading_time_from_soup(soup):
+    "Recupera tempo de leiura da postagem e o converte para número inteiro"
+    reading_time_text = soup.find("li", {"class": "meta-reading-time"}).text
+    reading_time = re.findall(r'\d+', reading_time_text)[0]
+    return int(reading_time)
+
+
+def get_summary_from_soup(soup):
+    "Recupera primeiro paragrafo da postagem e remove espaços vazios no fim"
+    complete_text = soup.find("div", {"class": "entry-content"})
+    summary = complete_text.find("p").text
+    return summary.rstrip()
+
+
+def get_category_from_soup(soup):
+    "Recupera categoria da postagem"
+    category_container = soup.find("a", {"class": "category-style"})
+    return category_container.find("span", {"class": "label"}).text
+
+
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    """
+    Deve receber como parâmetro o conteúdo HTML da página de uma única notícia
+    Deve um dicionário com os seguintes atributos:
+    "url": "https://blog.betrybe.com/novidades/noticia-bacana",
+    "title": "Notícia bacana",
+    "timestamp": "04/04/2021",
+    "writer": "Eu",
+    "reading_time": 4,
+    "summary": "Algo muito bacana aconteceu",
+    "category": "Ferramentas",
+    """
+
+    soup = BeautifulSoup(html_content, "html.parser")
+
+    return {
+        "url": get_url_from_soup(soup),
+        "title": get_title_from_soup(soup),
+        "timestamp": get_timestamp_from_soup(soup),
+        "writer": get_writer_from_soup(soup),
+        "reading_time": get_reading_time_from_soup(soup),
+        "summary": get_summary_from_soup(soup),
+        "category": get_category_from_soup(soup),
+    }
 
 
 # Requisito 5
