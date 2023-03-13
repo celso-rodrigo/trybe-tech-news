@@ -51,7 +51,19 @@ def scrape_updates(html_content):
 
 # Requisito 3
 def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
+    """
+    Deve receber como parâmetro uma string com o HTML da página de novidades
+    Deve fazer o scrape deste HTML para obter a URL da próxima página
+    Deve retornar a URL obtida ou None em caso de não haver uma
+    """
+
+    soup = BeautifulSoup(html_content, "html.parser")
+    anchor = soup.find("a", {"class": "next"})
+
+    if anchor is None:
+        return None
+    else:
+        return anchor.get("href")
 
 
 # Requisito 4
