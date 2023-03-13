@@ -1,5 +1,6 @@
 import requests
 from time import sleep
+from bs4 import BeautifulSoup
 
 
 # Requisito 1
@@ -32,7 +33,20 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    """
+    Deve receber uma string com o conteúdo HTML da página inicial do blog
+    Deve fazer o scrape do conteúdo e obter uma lista de URLs das notícias
+    Deve retornar uma lista de URLs das notícias dos cards
+    Caso não encontre nenhuma URL de notícia, retornar uma lista vazia
+    """
+
+    soup = BeautifulSoup(html_content, "html.parser")
+    urls = [
+        anchor.get("href")
+        for anchor in soup.find_all("a", {"class": "cs-overlay-link"})
+    ]
+
+    return urls
 
 
 # Requisito 3
