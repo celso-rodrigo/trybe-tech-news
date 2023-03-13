@@ -1,6 +1,33 @@
+import requests
+from time import sleep
+
+
 # Requisito 1
 def fetch(url):
-    """Seu código deve vir aqui"""
+    """
+    Deve receber uma URL
+    Deve fazer uma requisição HTTP GET para esta URL utilizando requests.get
+    Deve retornar o conteúdo HTML da resposta
+    Deve respeitar um Rate Limit de 1 requisição por segundo
+    Caso Status Code 200: OK, deve ser retornado seu conteúdo de texto
+    Caso status diferente de 200, deve-se retornar None
+    Caso não receba resposta em até 3 segundos, timeout e retorna None
+    """
+
+    try:
+        response = requests.get(
+            url, timeout=3, headers={"user-agent": "Fake user-agent"}
+        )
+        response.raise_for_status()
+    except (
+        requests.HTTPError,
+        requests.ReadTimeout,
+        requests.exceptions.Timeout,
+    ):
+        return None
+
+    sleep(1)  # Rate limit
+    return response.text
 
 
 # Requisito 2
