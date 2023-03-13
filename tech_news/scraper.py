@@ -1,7 +1,8 @@
 import requests
+import re
 from time import sleep
 from bs4 import BeautifulSoup
-import re
+from tech_news.database import create_news
 
 
 # Requisito 1
@@ -91,7 +92,7 @@ def get_writer_from_soup(soup):
 def get_reading_time_from_soup(soup):
     "Recupera tempo de leiura da postagem e o converte para número inteiro"
     reading_time_text = soup.find("li", {"class": "meta-reading-time"}).text
-    reading_time = re.findall(r'\d+', reading_time_text)[0]
+    reading_time = re.findall(r"\d+", reading_time_text)[0]
     return int(reading_time)
 
 
@@ -135,6 +136,38 @@ def scrape_news(html_content):
     }
 
 
+def get_posts_url(amount):
+    """
+    Retorna uma list de urls de postagens com o tamanho
+    igual o valor passado como parametro
+    """
+
+    html_content = fetch("https://blog.betrybe.com/")
+    fetched_urls = scrape_updates(html_content)
+    urls = []
+    index = 0
+
+    while len(urls) < amount:
+        urls.append(fetched_urls[index])
+        index += 1
+        if index == len(fetched_urls):
+            html_content = fetch(scrape_next_page_link(html_content))
+            fetched_urls = scrape_updates(html_content)
+            index = 0
+
+    return urls
+
+
 # Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+    """
+    Recebe um número inteiro N e buscar as últimas N notícias do site
+    As notícias buscadas são inseridas no banco de dados
+    Após inserir, a função retorna estas mesmas notícias
+    """
+
+    posts_url = get_posts_url(amount)
+    posts_info = [scrape_news(fetch(post)) for post in posts_url]
+    create_news(posts_info)
+
+    return posts_info
