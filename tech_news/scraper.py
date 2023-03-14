@@ -166,7 +166,7 @@ def get_tech_news(amount):
     Após inserir, a função retorna estas mesmas notícias
     """
 
-    posts_url = get_posts_url(amount)
+    posts_url = get_posts_url(int(amount))
     posts_info = [scrape_news(fetch(post)) for post in posts_url]
     create_news(posts_info)
 
