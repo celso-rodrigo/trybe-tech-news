@@ -1,13 +1,42 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+<h1>Trybe Tech News</h1>
+<p>Este projeto foi desenvolvido em março de 2023 durante meus estudos na <a href="https://www.betrybe.com/">Trybe</a>.</p>
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+<br/>
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+<h2>O quê foi desenvolvido</h2>
+<p>Foi desenvolvido um script para raspagem de dados do <a href="https://blog.betrybe.com/">blog da Trybe</a> onde o usuário pode, por meio de CLI, usar funções para tratar e analisar informações sobre notícias de tecnologia.</p>
+<br/>
+  
+<h2>O quê foi avaliado</h2>
+<ul>
+  <li>Uso do terminal interativo do Python;</li>
+  <li>Escrita e importação de módulos próprios;</li>
+  <li>Aplicação de técnicas de raspagem de dados;</li>
+  <li>Extração de dados de conteúdo HTML;</li>
+  <li>Armazenamento dos dados obtidos em um banco de dados.</li>
+</ul>
+
+<br/>
+
+<h2>Guia de instalação</h2> 
+<ol>
+  <li>
+    <p>Clone o repositório</p>
+    <pre>git clone git@github.com:celso-rodrigo/trybe-futebol-clube.git</pre>
+  </li>
+  <li>
+    <p>Abra a pasta do repositório</p>
+  </li>
+  <li>
+    <p>Crie e ative o ambiente virtual para o projeto</p>
+    <pre>python3 -m venv .venv && source .venv/bin/activate</pre>
+  </li>
+  <li>
+    <p>Instale as dependências</p>
+    <pre>python3 -m pip install -r dev-requirements.txt</pre>
+  </li>
+  <li>
+    <p>Execute o comando no terminal</p>
+    <pre>tech-news-analyzer</pre>
+  </li>
+</ol>
